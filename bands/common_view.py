@@ -8,3 +8,11 @@ class PostCommonView(APIView):
         serializer.save()
 
         return Response(serializer.data, status.HTTP_201_CREATED)
+
+
+class GetCommonView(APIView):
+    def get(self, request: Request) -> Response:
+        list = self.common_model.objects.all()
+        serializer = self.common_serializer(list, many=True)
+
+        return Response(serializer.data, status.HTTP_200_OK)

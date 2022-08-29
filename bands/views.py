@@ -1,27 +1,21 @@
+from rest_framework import generics
 from rest_framework.views import APIView, Request, Response, status
 
 from bands.serializers import AlbumSerializer, BandSerializer
 
-from .common_view import PostCommonView
+from .common_view import GetCommonView, PostCommonView
+from .models import Album, Band
+
+# class BandView(PostCommonView, GetCommonView):
+#     common_serializer = BandSerializer
+#     common_model = Band
 
 
-class BandView(PostCommonView):
-    common_serializer = BandSerializer
-
-    # def post(self, request: Request) -> Response:
-    #     serializer = BandSerializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-
-    #     return Response(serializer.data, status.HTTP_201_CREATED)
+class BandView(generics.CreateAPIView, generics.ListAPIView):
+    serializer_class = BandSerializer
+    queryset = Band.objects.all()
 
 
-class AlbumView(PostCommonView):
-    common_serializer = AlbumSerializer
-
-    # def post(self, request: Request) -> Response:
-    #     serializer = AlbumSerializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-
-    #     return Response(serializer.data, status.HTTP_201_CREATED)
+class AlbumView(generics.CreateAPIView, generics.ListAPIView):
+    serializer_class = AlbumSerializer
+    queryset = Album.objects.all()

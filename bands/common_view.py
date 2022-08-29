@@ -1,7 +1,7 @@
 from rest_framework.views import APIView, Request, Response, status
 
 
-class CommonView(APIView):
+class PostCommonView(APIView):
     def post(self, request: Request) -> Response:
         serializer = self.common_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
